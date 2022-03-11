@@ -3,12 +3,8 @@
 # Use the built-in ipp2ppd tool to create a PPD file for AirPrint
 # Add icon to PPD (if we can get one) and install the printer
 # Credit apizz (https://gist.github.com/apizz/5ed7a944d8b17f28ddc53a017e99cd35)
-# for the origional bash script
+# for the original bash script
 # Updated to zsh by Everette_Allen@ncsu.edu for use with JAMF Script Variables
-
-# testing
-
-4=""
 
 # Required printer info
 # This will need to be an IP Address or a fully qualified DNS Name
@@ -40,11 +36,11 @@ fi
 #
 # Requiring icon will prevent install if we can't get it
 # Set this to the string true or false not a bool
-if [[ ! -z "$8" ]; then
+if [ ! -z "$8" ]; then
     REQUIRE_ICON="$8"
 else
     REQUIRE_ICON="false"
-if
+fi
 # Number of seconds to wait for TCP verification before exiting
 CHECK_TIMEOUT=2
 # Custom PPD info
@@ -118,14 +114,13 @@ InstallPrinter() {
 	/usr/sbin/lpadmin -p ${PRINTER_NAME} -D "${PRINTER_DISPLAY_NAME}" -L "${PRINTER_LOCATION}" -E -v ipp://${PRINTER_IP} -P ${PPD} -o printer-is-shared=false
 }
 
-main() {
-	CheckPrinter
-	CreatePPD
-	if [ $REQUIRE_ICON == "true"] then;
-	    CheckIcon
-	    AppendPPDIcon
-	fi
-	InstallPrinter
-}
+# Do our work here
+CheckPrinter
+CreatePPD
+if [ $REQUIRE_ICON = "true" ]; then
+    CheckIcon
+    AppendPPDIcon
+fi
+InstallPrinter
 
-main "@"
+exit 0
