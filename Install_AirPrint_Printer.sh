@@ -6,33 +6,44 @@
 # for the origional bash script
 # Updated to zsh by Everette_Allen@ncsu.edu for use with JAMF Script Variables
 
+# testing
+
+4=""
+
 # Required printer info
-if $4 then;
-    PRINTER_IP=$4
+# This will need to be an IP Address or a fully qualified DNS Name
+if [ ! -z "$4" ]; then
+    PRINTER_IP="$4"
 else
     echo "IP Address or DNS name of Printer Not Found.  Please check script variables."
     exit 1
 fi
-if $5 then;
-    PRINTER_NAME=$5
+
+if [ ! -z "$5" ]; then
+    PRINTER_NAME="$5"
 else
-    PRINTER_NAME=$4
+    PRINTER_NAME="$4"
 fi
-if $6 then;
-    PRINTER_DISPLAY_NAME=$6
+
+if [ ! -z "$6" ]; then
+    PRINTER_DISPLAY_NAME="$6"
 else
-    PRINTER_DISPLAY_NAME=$4
+    PRINTER_DISPLAY_NAME="$4"
 fi
-if $7 then;
-    PRINTER_LOCATION=$7
+
+if [ ! -z "$7" ]; then
+    PRINTER_LOCATION="$7"
 else
-    PRINTER_LOCATION=$4
+    PRINTER_LOCATION="$4"
 fi
+## End Required printer info
+#
 # Requiring icon will prevent install if we can't get it
-if $8 then;
-    REQUIRE_ICON=$8
+# Set this to the string true or false not a bool
+if [[ ! -z "$8" ]; then
+    REQUIRE_ICON="$8"
 else
-    REQUIRE_ICON=false
+    REQUIRE_ICON="false"
 if
 # Number of seconds to wait for TCP verification before exiting
 CHECK_TIMEOUT=2
@@ -113,7 +124,7 @@ main() {
 	if [ $REQUIRE_ICON == "true"] then;
 	    CheckIcon
 	    AppendPPDIcon
-	if
+	fi
 	InstallPrinter
 }
 
